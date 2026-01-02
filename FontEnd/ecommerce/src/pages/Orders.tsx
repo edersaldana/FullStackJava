@@ -27,25 +27,39 @@ const Orders = () => {
       <h1 className="page-title">📦 Mis Órdenes</h1>
 
       <div className="orders-grid">
-        {orders.map(order => (
+        {orders.map((order) => (
           <div key={order.id} className="order-card">
+            {/* Header de la orden */}
             <div className="order-header">
-              <span>Orden #{order.orderNumber}</span>
+              <span className="order-number">Orden #{order.orderNumber}</span>
               <span className={`order-status ${statusColor(order.status)}`}>
                 {order.status}
               </span>
             </div>
 
+            {/* Items de la orden */}
             <div className="order-items">
-              {order.items.map((item: any) => (
-                <div key={item.productId} className="order-item">
-                  <span>{item.product?.name ?? "Producto"}</span>
-                  <span>x {item.quantity}</span>
-                  <span>S/ {(item.unitPrice * item.quantity).toFixed(2)}</span>
+              {order.items.map((item: any, idx: number) => (
+                <div key={item.productId + "-" + idx} className="order-item">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.productName}
+                    className="order-item-img"
+                  />
+
+                  <div className="order-item-info">
+                    <strong>{item.productName}</strong>
+                    <p className="item-qty">Cantidad: {item.quantity}</p>
+                  </div>
+
+                  <div className="item-price">
+                    S/ {(item.unitPrice * item.quantity).toFixed(2)}
+                  </div>
                 </div>
               ))}
             </div>
 
+            {/* Footer de la orden */}
             <div className="order-footer">
               <span>Total</span>
               <strong>S/ {order.totalAmount.toFixed(2)}</strong>
