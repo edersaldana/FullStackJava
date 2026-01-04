@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import ProductCard from "@/components/products/ProductCard"
-import "../styles/buttons.css";
-import "../styles/home.css";
-
+import { getProducts } from "@/services/productService"
+import "../styles/buttons.css"
+import "../styles/home.css"
 
 interface Product {
   id: number
@@ -16,8 +16,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("http://localhost:8082/api/products")
-      .then(res => res.json())
+    getProducts()
       .then(data => {
         setProducts(data)
         setLoading(false)

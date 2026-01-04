@@ -1,7 +1,7 @@
-import type { Order } from "../types/order"
+import type { Order } from "@/types/order"
+import { API_BASE_URL } from "@/config/api"
 
-const API_URL = "http://localhost:8084/api/orders"
-// por ahora puede quedar así (local)
+const API_URL = `${API_BASE_URL}/api/orders`
 
 export async function getOrders(): Promise<Order[]> {
   const response = await fetch(API_URL)

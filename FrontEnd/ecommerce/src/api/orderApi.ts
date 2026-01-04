@@ -1,8 +1,8 @@
 import axios from "axios"
 import type { CreateOrderRequest } from "./OrderTypes"
+import { API_BASE_URL } from "@/config/api"
 
-const API_URL = "http://localhost:8084/api/orders"
-
+const API_URL = `${API_BASE_URL}/api/orders`
 
 export const createOrder = async (data: CreateOrderRequest) => {
   const response = await axios.post(API_URL, data)
