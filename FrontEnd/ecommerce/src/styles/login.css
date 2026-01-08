@@ -42,7 +42,7 @@
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-sizing: border-box; /* Importante para que el padding no desborde */
+  box-sizing: border-box;
 }
 
 .btn-primary {
@@ -59,4 +59,39 @@
 
 .btn-primary:hover {
   background-color: #cc0000;
+}
+
+/* Mensaje de error */
+.error-message {
+  background-color: #fee2e2;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #fecaca;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Footer del login */
+.login-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-footer a {
+  color: #ff0000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Estado deshabilitado del botón */
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

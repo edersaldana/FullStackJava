@@ -1,11 +1,11 @@
 .pv-header {
   background-color: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
   padding: 10px 0;
+  border-bottom: 2px solid #f4f4f4;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .pv-header-container {
@@ -17,108 +17,256 @@
   padding: 0 20px;
 }
 
-/* Logo */
 .pv-logo a {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ff0000; /* Color rojo tipo Plaza Vea */
+  font-size: 28px;
+  font-weight: 800;
+  color: #ff0000; /* Rojo Plaza Vea */
   text-decoration: none;
+  letter-spacing: -1px;
 }
 
-/* Buscador Centrado */
+/* Buscador */
 .pv-search-container {
   flex: 1;
+  max-width: 500px;
+  margin: 0 30px;
   display: flex;
-  margin: 0 40px;
-  max-width: 600px;
   position: relative;
 }
 
 .pv-search-input {
   width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #cccccc;
-  border-radius: 20px;
+  padding: 12px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  background-color: #f8f8f8;
   outline: none;
+  transition: all 0.3s;
+}
+
+.pv-search-input:focus {
+  border-color: #ff0000;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(255,0,0,0.1);
 }
 
 .pv-search-btn {
   position: absolute;
-  right: 10px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
+  font-size: 18px;
 }
 
-/* Acciones y Mi Cuenta */
-.pv-actions {
+/* Menú de Usuario */
+.pv-user-menu-container, .pv-account-btn {
   display: flex;
   align-items: center;
-  gap: 20px;
-}
-
-.pv-account-btn {
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
   background: none;
   border: none;
-  font-size: 14px;
-  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.pv-user-menu-container:hover {
+  background-color: #f9f9f9;
+}
+
+.pv-account-info {
   display: flex;
-  align-items: center;
-  gap: 5px;
+  flex-direction: column;
+  text-align: left;
+}
+
+.pv-account-label {
+  font-size: 11px;
+  color: #777;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.pv-user-name {
+  font-size: 14px;
   color: #333;
+  font-weight: 600;
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.pv-user-item {
-  position: relative;
-  cursor: pointer;
-}
-
+/* Dropdown */
 .pv-dropdown {
   display: none;
   position: absolute;
   top: 100%;
   right: 0;
   background: white;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  min-width: 150px;
-  border-radius: 4px;
+  min-width: 180px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 10px 0;
+  margin-top: 10px;
+  border: 1px solid #eee;
 }
 
-.pv-user-item:hover .pv-dropdown {
+.pv-user-menu-container:hover .pv-dropdown {
   display: block;
 }
 
 .pv-dropdown a, .pv-dropdown button {
   display: block;
-  padding: 10px;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #444;
+  font-size: 14px;
   width: 100%;
   text-align: left;
   border: none;
   background: none;
-  text-decoration: none;
-  color: #333;
-  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.pv-dropdown button:hover { background-color: #f5f5f5; }
+.pv-dropdown a:hover, .pv-dropdown button:hover {
+  background-color: #f4f4f4;
+  color: #ff0000;
+}
 
 /* Carrito */
-.pv-cart {
+.cart-wrapper {
   position: relative;
-  text-decoration: none;
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.cart-icon {
+  font-size: 26px;
 }
 
 .cart-badge {
   position: absolute;
-  top: -8px;
-  right: -10px;
-  background: #ff0000;
+  top: -2px;
+  right: -5px;
+  background-color: #ff0000; /* Rojo Plaza Vea */
   color: white;
-  font-size: 11px;
-  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  height: 18px;
+  width: 18px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white; /* Crea el efecto de separación */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Contenedor principal de info del usuario */
+.pv-user-menu-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.pv-user-menu-container:hover {
+  background-color: #fef2f2; /* Un toque rojo suave al pasar el mouse */
+}
+
+.pv-account-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pv-account-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #ef4444; /* Rojo tipo Plaza Vea */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pv-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Estilo especial para el link de Admin dentro del menú */
+.admin-item {
+  color: #ef4444 !important;
+  font-weight: bold;
+  background-color: #fff1f2;
+}
+
+.logout-btn {
+  color: #6b7280;
+  font-weight: 500;
+  width: 100%;
+  padding: 12px 20px;
+  cursor: pointer; /* Indispensable para saber que es clickable */
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #fff1f2;
+  color: #ef4444;
+}
+
+/* Crea un área invisible para que el menú no se cierre al mover el mouse hacia abajo */
+.pv-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -15px; /* Cubre el espacio vacío de 10px del margin-top + extra */
+  left: 0;
+  width: 100%;
+  height: 15px;
+  display: block;
+}
+
+/* Ajuste del dropdown para asegurar que esté alineado */
+.pv-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; /* Se mantiene al final del contenedor */
+  right: 0;
+  background: white;
+  min-width: 200px; /* Un poco más ancho para que no se vea apretado */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 8px 0;
+  margin-top: 5px; /* Reducimos el espacio para facilitar la transición */
+  border: 1px solid #eee;
+  z-index: 1001;
+}
+
+/* Agrupa usuario y carrito para que estén juntos */
+.pv-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espacio reducido entre Usuario y Carrito */
+  margin-left: auto; /* Empuja el bloque a la derecha */
+}
+
+/* Evita que el buscador empuje demasiado */
+.pv-search-container {
+  flex: 0 1 450px; /* Evita que el buscador ocupe todo el centro */
+  margin: 0 30px;
 }
