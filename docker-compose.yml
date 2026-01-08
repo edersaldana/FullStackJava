@@ -161,24 +161,6 @@ services:
       - microservice-network
     restart: unless-stopped
 
-  # =============================
-  # Frontend Service (React + Nginx)
-  # =============================
-  frontend:
-    build:
-      context: ./FrontEnd/ecommerce
-      dockerfile: Dockerfile
-    image: fullstackjava-frontend:1.0
-    container_name: fullstackjava-frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      api-gateway-dev:
-        condition: service_started
-    networks:
-      - microservice-network
-    restart: unless-stopped
-
 # =============================
 # Networks
 # =============================
