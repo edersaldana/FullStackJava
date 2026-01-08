@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import type { CreateOrderRequest } from "@/api/OrderTypes"
 import "@/styles/cart.css"
 
-const Cart = () => {
+export const Cart = () => {
   const {
     items,
     clearCart,
@@ -71,4 +71,3 @@ const Cart = () => {
   )
 }
 
-export default Cart

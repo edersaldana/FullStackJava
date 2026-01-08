@@ -1,27 +1,57 @@
-import { Link } from "react-router-dom"
-import { useCart } from "@/context/CartContext"
+import { Link, useNavigate } from 'react-router-dom';
+import '../../styles/header.css';
 
-const Header = () => {
-  const { items } = useCart()
+export const Header = () => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+    window.location.reload();
+  };
 
   return (
-    <header className="w-full border-b">
-      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold">
-          MyStore
-        </Link>
+    <header className="pv-header">
+      <div className="pv-header-container">
+        {/* LADO IZQUIERDO: LOGO */}
+        <div className="pv-logo">
+          <Link to="/">MyStore</Link>
+        </div>
 
-        <Link to="/cart" className="relative">
-          🛒
-          {items.length > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 rounded-full">
-              {items.length}
-            </span>
+        {/* CENTRO: BUSCADOR */}
+        <div className="pv-search-container">
+          <input 
+            type="text" 
+            placeholder="¿Qué estás buscando hoy?" 
+            className="pv-search-input"
+          />
+          <button className="pv-search-btn">🔍</button>
+        </div>
+
+        {/* LADO DERECHO: ACCIONES */}
+        <div className="pv-actions">
+          {user ? (
+            <div className="pv-user-item">
+              <span className="pv-user-welcome">Hola, <strong>{user.name}</strong></span>
+              <div className="pv-dropdown">
+                <Link to="/orders">Mis Pedidos</Link>
+                <button onClick={handleLogout}>Cerrar Sesión</button>
+              </div>
+            </div>
+          ) : (
+            <button className="pv-account-btn" onClick={() => navigate('/login')}>
+              👤 Mi Cuenta
+            </button>
           )}
-        </Link>
+
+          <Link to="/cart" className="pv-cart">
+            <span className="cart-icon">🛒</span>
+            <span className="cart-badge">0</span>
+          </Link>
+        </div>
       </div>
     </header>
-  )
-}
-
-export default Header
+  );
+};

@@ -11,7 +11,7 @@ interface Product {
   imageUrl: string
 }
 
-const Home = () => {
+export const Home = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -49,5 +49,3 @@ const Home = () => {
     </div>
   )
 }
-
-export default Home

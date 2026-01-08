@@ -1,15 +1,19 @@
-import { Routes, Route } from "react-router-dom"
-import Home from "@/pages/Home"
-import Orders from "@/pages/Orders"
+// src/router/AppRouter.tsx (o App.tsx)
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Home } from '../pages/Home';
+import { Login } from '../pages/Login'; // Asegúrate de que la importación sea correcta
+import { Cart } from '../pages/Cart';
+import { Header } from '../components/layout/Header';
 
-function AppRouter() {
-
+export const AppRouter = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/orders" element={<Orders />} />
-    </Routes>
-  )
-}
-
-export default AppRouter
+    <BrowserRouter>
+      <Header /> {/* El Header se mantiene fijo arriba */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} /> {/* ESTA ES LA LÍNEA QUE FALTA */}
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
