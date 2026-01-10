@@ -5,11 +5,10 @@ import { API_BASE_URL } from "@/config/api"
 const API_URL = `${API_BASE_URL}/api/orders`
 
 export const createOrder = async (orderData: any,token: string) => {
-  //const token = localStorage.getItem('token');
   
   const response = await axios.post(API_URL, orderData, {
     headers: {
-      Authorization: `Bearer ${token}` // Aquí enviamos la identidad
+      Authorization: `Bearer ${token}`
     }
   });
   return response.data;
@@ -20,5 +19,14 @@ export const getOrders = async () => {
   const response = await axios.get(API_URL, {
     headers: { Authorization: `Bearer ${token}` }
   });
-  return response.data; // <-- Devolver solo la data aquí
+  return response.data;
 };
+
+export const confirmPayment = async (orderId: number, token: string) => {
+  const response = await axios.patch(`${API_URL}/${orderId}/payment`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data;
+}

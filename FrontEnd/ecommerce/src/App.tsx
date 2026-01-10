@@ -7,9 +7,7 @@ import { Register } from "./pages/Register";
 import Orders from "./pages/Orders";
 import { CartProvider } from "./context/CartContext";
 import { ProductForm } from "./pages/Admin/ProductForm";
-
-// 1. Verifica si ProtectedRoute usa export default o export const. 
-// Si es export const, debe llevar llaves { ProtectedRoute }
+import PaymentPage from './pages/PaymentPage';
 import { ProtectedRoute } from "./components/auth/ProtectedRoute"; 
 import { AdminInventory } from "./pages/AdminInventory";
 
@@ -32,6 +30,7 @@ function App() {
             <Route element={<ProtectedRoute allowedRoles={['USER']} />}>
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<Orders />} />
+              <Route path="/payment/:orderId" element={<PaymentPage />} />
             </Route>
 
             {/* RUTAS SOLO PARA ADMINS */}

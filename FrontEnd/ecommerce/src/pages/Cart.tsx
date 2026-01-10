@@ -28,7 +28,7 @@ const handleCreateOrder = async () => {
   const user = JSON.parse(userStr);
 
   const orderData = {
-    userId: user.id, // ID de Carlos López
+    userId: user.id,
     items: items.map(item => ({
       productId: item.productId,
       quantity: item.quantity,
@@ -38,11 +38,24 @@ const handleCreateOrder = async () => {
   };
 
   try {
-    await createOrder(orderData, token);
-    alert("¡Orden creada con éxito!");
-    // Limpiar carrito aquí...
+    // 1. Guardamos la respuesta para obtener el ID de la orden
+    const response = await createOrder(orderData, token);
+    
+    // 2. Limpiamos el carrito inmediatamente (esto resuelve lo que me consultaste)
+    clearCart(); 
+
+    // 3. Redirigimos a la página de pago usando el ID que devolvió el Backend
+    // Si tu backend devuelve el objeto directamente: response.id
+    if (response && response.id) {
+      navigate(`/payment/${response.id}`);
+    } else {
+      // Fallback por si acaso no devuelve el ID
+      navigate('/orders');
+    }
+
   } catch (error) {
     console.error("Error creando orden", error);
+    alert("Hubo un error al procesar tu orden.");
   }
 };
 
