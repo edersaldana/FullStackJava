@@ -1,0 +1,28 @@
+/* Asegúrate de que no haya nada limitando el ancho fuera del content */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita scroll horizontal innecesario */
+}
+
+.main-layout {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  width: 100%; /* Obligatorio */
+  max-width: 1400px; /* Aumentamos un poco para pantallas modernas */
+  margin: 0 auto; /* Centra el bloque */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px); /* Ajusta según el alto de tu header */
+}
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+  .content {
+    padding: 20px 15px;
+  }
+}
