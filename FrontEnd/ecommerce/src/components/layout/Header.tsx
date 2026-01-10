@@ -9,9 +9,10 @@ export const Header = () => {
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/login');
+    //localStorage.removeItem('token');
+    //localStorage.removeItem('user');
+    localStorage.clear();
+    navigate('/');
     window.location.reload();
   };
 

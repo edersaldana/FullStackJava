@@ -3,6 +3,7 @@ import MainLayout from "./components/layout/MainLayout";
 import { Home } from "./pages/Home";
 import { Cart } from "./pages/Cart";
 import { Login } from "./pages/Login"; 
+import { Register } from "./pages/Register";
 import Orders from "./pages/Orders";
 import { CartProvider } from "./context/CartContext"; // 1. Importar el Provider
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/orders" element={<Orders />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>
