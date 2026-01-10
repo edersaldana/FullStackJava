@@ -6,20 +6,21 @@ html, body {
   overflow-x: hidden; /* Evita scroll horizontal innecesario */
 }
 
+/* layout.css */
 .main-layout {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  background-color: #f3f4f6; /* Gris azulado muy tenue */
+  min-height: 100vh;
 }
 
 .content {
-  width: 100%; /* Obligatorio */
-  max-width: 1400px; /* Aumentamos un poco para pantallas modernas */
-  margin: 0 auto; /* Centra el bloque */
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 80px); /* Ajusta según el alto de tu header */
+  flex: 1;
+  width: 100%; /* Ocupa todo el ancho */
+  max-width: 1200px; /* Se queda en 1200px en monitores grandes */
+  margin: 0 auto; /* Centra esos 1200px */
+  padding: 20px;
+  box-sizing: border-box;
 }
+
 /* Responsivo para móviles */
 @media (max-width: 768px) {
   .content {
