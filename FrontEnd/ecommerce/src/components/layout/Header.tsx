@@ -8,6 +8,7 @@ export const Header = () => {
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     localStorage.clear();
     navigate('/');
     window.location.reload();
