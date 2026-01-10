@@ -67,3 +67,8 @@
   background-color: #1d4ed8;
   box-shadow: 0 4px 12px rgba(43, 99, 217, 0.2);
 }
+
+.btn-admin:hover {
+  background-color: #374151 !important;
+  transform: translateY(-2px);
+}

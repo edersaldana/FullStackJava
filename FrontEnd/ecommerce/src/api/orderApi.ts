@@ -4,15 +4,10 @@ import { API_BASE_URL } from "@/config/api"
 
 const API_URL = `${API_BASE_URL}/api/orders`
 
-//export const createOrder = async (data: CreateOrderRequest) => {
-//  const response = await axios.post(API_URL, data)
-//  return response.data
-//}
-
-export const createOrder = async (data: CreateOrderRequest) => {
-  const token = localStorage.getItem('token');
+export const createOrder = async (orderData: any,token: string) => {
+  //const token = localStorage.getItem('token');
   
-  const response = await axios.post(API_URL, data, {
+  const response = await axios.post(API_URL, orderData, {
     headers: {
       Authorization: `Bearer ${token}` // Aquí enviamos la identidad
     }
@@ -21,6 +16,9 @@ export const createOrder = async (data: CreateOrderRequest) => {
 }
 
 export const getOrders = async () => {
-  const response = await axios.get(API_URL)
-  return response.data
-}
+  const token = localStorage.getItem('token');
+  const response = await axios.get(API_URL, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return response.data; // <-- Devolver solo la data aquí
+};

@@ -5,21 +5,42 @@ import { Cart } from "./pages/Cart";
 import { Login } from "./pages/Login"; 
 import { Register } from "./pages/Register";
 import Orders from "./pages/Orders";
-import { CartProvider } from "./context/CartContext"; // 1. Importar el Provider
+import { CartProvider } from "./context/CartContext";
+import { ProductForm } from "./pages/Admin/ProductForm";
+
+// 1. Verifica si ProtectedRoute usa export default o export const. 
+// Si es export const, debe llevar llaves { ProtectedRoute }
+import { ProtectedRoute } from "./components/auth/ProtectedRoute"; 
+import { AdminInventory } from "./pages/AdminInventory";
+
+// 2. BORRAMOS el const AdminInventory de aquí porque ya lo importamos arriba
+const EditProduct = () => <div className="p-4"><h1>Editar Producto (Próximamente)</h1></div>;
 
 function App() {
   return (
-    // 2. Envolver todo el árbol de componentes
     <CartProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/orders" element={<Orders />} />
-          </Route>
+          {/* RUTAS PÚBLICAS */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+            
+            {/* RUTAS SOLO PARA CLIENTES (USER) */}
+            <Route element={<ProtectedRoute allowedRoles={['USER']} />}>
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/orders" element={<Orders />} />
+            </Route>
+
+            {/* RUTAS SOLO PARA ADMINS */}
+            <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
+              <Route path="/admin/inventory" element={<AdminInventory />} />
+              <Route path="/admin/new" element={<ProductForm />} />      {/* NUEVO */}
+              <Route path="/admin/edit/:id" element={<ProductForm />} /> {/* EDITAR */}
+            </Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </CartProvider>

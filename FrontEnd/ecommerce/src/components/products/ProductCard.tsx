@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
+import { useNavigate } from "react-router-dom";
 import "@/styles/product.css";
 
 interface ProductCardProps {
@@ -11,24 +12,14 @@ interface ProductCardProps {
 
 const ProductCard = ({ id, name, price, imageUrl }: ProductCardProps) => {
   const { addToCart } = useCart();
-  const [added, setAdded] = useState(false); // Estado para feedback visual
+  const navigate = useNavigate();
+  const [added, setAdded] = useState(false);
+  
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   const handleAdd = () => {
-    addToCart({
-      productId: id,
-      name,
-      price,
-      quantity: 1,
-      imageUrl
-    });
-
-    // Activar feedback visual
+    addToCart({ productId: id, name, price, quantity: 1, imageUrl });
     setAdded(true);
-
-    // Opcional: Notificar manualmente si el Context no refresca el Header automáticamente
-    window.dispatchEvent(new Event('cartUpdated'));
-
-    // Revertir el botón después de 1.5 segundos
     setTimeout(() => setAdded(false), 1500);
   };
 
@@ -40,14 +31,25 @@ const ProductCard = ({ id, name, price, imageUrl }: ProductCardProps) => {
       <h3 className="product-name">{name}</h3>
       <p className="product-price">S/ {price}</p>
       
-      <button 
-        className={`btn-add mt-auto ${added ? 'btn-added' : ''}`} 
-        onClick={handleAdd}
-        disabled={added}
-      >
-        {added ? '✅ ¡Añadido!' : '➕ Agregar'}
-      </button>
-    </div>
+      {/* LÓGICA DE BOTÓN POR ROL */}
+      {user?.role === 'ADMIN' ? (
+        <button 
+          className="btn-add mt-auto btn-admin" 
+          onClick={() => navigate(`/admin/edit/${id}`)}
+          style={{ backgroundColor: '#4b5563' }}
+        >
+          ✏️ Editar Producto
+        </button>
+      ) : (
+        <button 
+          className={`btn-add mt-auto ${added ? 'btn-added' : ''}`} 
+          onClick={handleAdd}
+          disabled={added}
+        >
+          {added ? '✅ ¡Añadido!' : '➕ Agregar'}
+        </button>
+      )} 
+    </div> // <--- Aquí faltaba cerrar la lógica de JS y el div
   );
 };
 

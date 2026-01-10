@@ -15,25 +15,36 @@ export const Cart = () => {
 
   const navigate = useNavigate()
 
-  const handleCreateOrder = async () => {
-    if (items.length === 0) return
+const handleCreateOrder = async () => {
+  const token = localStorage.getItem('token');
+  const userStr = localStorage.getItem('user');
 
-    const payload: CreateOrderRequest = {
-      userId: 1,
-      items: items.map(item => ({
-        productId: item.productId,
-        quantity: item.quantity
-      }))
-    }
-
-    try {
-      await createOrder(payload)
-      clearCart()
-      navigate("/orders")
-    } catch (error) {
-      console.error("Error creando orden", error)
-    }
+  if (!token || !userStr) {
+    alert("Debes iniciar sesión para comprar");
+    navigate('/login');
+    return;
   }
+
+  const user = JSON.parse(userStr);
+
+  const orderData = {
+    userId: user.id, // ID de Carlos López
+    items: items.map(item => ({
+      productId: item.productId,
+      quantity: item.quantity,
+      price: item.price
+    })),
+    total: items.reduce((acc, item) => acc + (item.price * item.quantity), 0)
+  };
+
+  try {
+    await createOrder(orderData, token);
+    alert("¡Orden creada con éxito!");
+    // Limpiar carrito aquí...
+  } catch (error) {
+    console.error("Error creando orden", error);
+  }
+};
 
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
