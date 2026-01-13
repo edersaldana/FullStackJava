@@ -10,6 +10,7 @@ import { ProductForm } from "./pages/Admin/ProductForm";
 import PaymentPage from './pages/PaymentPage';
 import { ProtectedRoute } from "./components/auth/ProtectedRoute"; 
 import { AdminInventory } from "./pages/AdminInventory";
+import Footer from './components/layout/Footer';
 
 // 2. BORRAMOS el const AdminInventory de aquí porque ya lo importamos arriba
 const EditProduct = () => <div className="p-4"><h1>Editar Producto (Próximamente)</h1></div>;
@@ -42,6 +43,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Footer />
     </CartProvider>
   );
 }
