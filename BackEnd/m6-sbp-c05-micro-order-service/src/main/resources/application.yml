@@ -1,0 +1,13 @@
+server:
+  port: 8084
+
+spring:
+  profiles:
+    active: local
+
+  application:
+    name: order-service
+
+jwt:
+  secret: FPrdmu7Rv6D+98dRPJVKj8ibeb8KPcuYt4s59Nh79iY=
+  expiration: 86400000
