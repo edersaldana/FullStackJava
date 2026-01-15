@@ -1,56 +1,97 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Search, ShoppingCart, User } from "lucide-react";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '@/context/CartContext';
+import '../../styles/header.css';
 
 export const Header = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const { items } = useCart();
+  
+  // --- NUEVA LÓGICA DE BÚSQUEDA ---
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Navega a la Home y añade el parámetro de búsqueda a la URL
     if (searchTerm.trim()) {
+      // Navega a la home con el parámetro ?search=...
       navigate(`/?search=${encodeURIComponent(searchTerm.trim())}`);
     } else {
-      navigate("/"); // Si está vacío, muestra todo
+      navigate('/');
     }
   };
+  // --------------------------------
+
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.clear();
+    navigate('/');
+    window.location.reload();
+  };
+
+  const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <header className="bg-white border-b sticky top-0 z-50">
-      <div className="max-w-[1200px] mx-auto px-4 h-20 flex items-center justify-between gap-8">
-        
-        {/* Logo */}
-        <Link to="/" className="text-3xl font-bold text-red-600">
-          MyStore
-        </Link>
+    <header className="pv-header">
+      <div className="pv-header-container">
+        <div className="pv-logo">
+          <Link to="/">MyStore</Link>
+        </div>
 
-        {/* Buscador central */}
-        <form onSubmit={handleSearch} className="relative flex-grow max-w-2xl">
-          <input
-            type="text"
-            placeholder="¿Qué buscas hoy?"
-            className="w-full pl-6 pr-12 py-3 border-2 border-red-500 rounded-full focus:outline-none focus:ring-2 focus:ring-red-200"
+        {/* BUSCADOR ACTUALIZADO CON FORM Y ESTADO */}
+        <form onSubmit={handleSearch} className="pv-search-container">
+          <input 
+            type="text" 
+            placeholder="¿Qué buscas hoy?" 
+            className="pv-search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 text-red-500">
-            <Search size={24} />
-          </button>
+          <button type="submit" className="pv-search-btn">🔍</button>
         </form>
 
-        {/* Iconos de Usuario y Carrito */}
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <User size={24} className="text-blue-600" />
-            <div className="hidden md:block leading-tight">
-              <span className="text-[10px] font-bold text-red-600 block">BIENVENIDO</span>
-              <span className="text-sm font-semibold text-gray-700">Ingresar / Mi Cuenta</span>
+        <div className="pv-actions">
+          {user ? (
+            <div className="pv-user-menu-container">
+              <div className="pv-account-info">
+                <span className="pv-account-label">
+                  {user.role === 'ADMIN' ? '👑 Administrador' : '👤 Cliente'}
+                </span>
+                <span className="pv-user-name">Hola, {user.name}</span>
+              </div>
+              
+              <div className="pv-dropdown">
+                <div className="dropdown-arrow"></div>
+                {user.role === 'ADMIN' ? (
+                  <Link to="/admin/inventory" className="admin-item">📊 Inventario</Link>
+                ) : (
+                  <Link to="/orders">📦 Mis Pedidos</Link>
+                )}
+                <hr />
+                <button onClick={handleLogout} className="logout-btn">🚪 Cerrar Sesión</button>
+              </div>
             </div>
-          </div>
-          <ShoppingCart size={28} className="text-gray-600" />
-        </div>
+          ) : (
+            <button className="pv-account-btn" onClick={() => navigate('/login')}>
+              <span className="user-icon">👤</span>
+              <div className="pv-account-info">
+                <span className="pv-account-label">Bienvenido</span>
+                <span className="pv-user-name">Ingresar / Mi Cuenta</span>
+              </div>
+            </button>
+          )}
 
+          {/* EL CARRITO SOLO SE MUESTRA SI NO ES ADMIN */}
+          {user?.role !== 'ADMIN' && (
+            <Link to="/cart" className="pv-cart">
+              <div className="cart-wrapper">
+                <span className="cart-icon">🛒</span>
+                {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+              </div>
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );
